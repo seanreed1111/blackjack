@@ -1,0 +1,4 @@
+blackjack
+=========
+
+Ruby blackjack game
