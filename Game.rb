@@ -2,15 +2,22 @@ require './PlayingCard'
 require './Deck'
 
 class Hand
-  attr_reader :cards
+  attr_reader :cards, :has_ace
+  attr_accessor :win
   def initialize()
     @cards = [] #an array of PlayingCard objects
     @has_ace = false
+    @win = false
+  end
+
+  def first_card
+    @cards[@cards.length-1]
   end
 
   def clear
     @cards = []
     @has_ace = false
+    @win = false
   end
 
   def hit!(deck)
@@ -40,6 +47,8 @@ class Hand
     return count
   end
 
+
+
 end
 
 class Player
@@ -49,7 +58,7 @@ class Player
     ObjectSpace.each_object(self).count
   end
   
-  def initialize(name=nil)
+  def initialize(name)
     @name = name
     @hand = Hand.new
   end
@@ -57,8 +66,16 @@ class Player
   def winnings(amount=0)
     @cash += amount
   end
-
-
 end
+
+class Dealer
+  attr_reader :hand
+
+    def initialize
+      @hand = Hand.new
+    end
+end
+
+
 
 
