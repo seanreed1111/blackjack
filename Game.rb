@@ -6,13 +6,11 @@ class Hand
   def initialize()
     @cards = [] #an array of PlayingCard objects
     @has_ace = false
-    @count = 0
   end
 
   def clear
     @cards = []
     @has_ace = false
-    @count = 0
   end
 
   def hit!(deck)
@@ -24,25 +22,24 @@ class Hand
   end
 
   def total
+    count = 0
     @cards.each do |playingcard|
-      @count += playingcard.value 
+      count += playingcard.value 
     @has_ace = @has_ace || playingcard.is_ace?
     end
 
+    #The playingcard.value of Aces = 1
+    #At most one Ace per hand can have value of 11,
+    #but this +10 added to count must not make 
+    #the player's count go over 21
+
     if @has_ace
-      return self.total_with_aces
-    else
-      return @count
+      return count + 10 if count + 10 <= 21 
     end
+
+    return count
   end
 
-  def total_with_aces
-    #playingcard.value of Aces = 1
-    #At most one Ace per hand can have value of 11,
-    #but this +10 added to @count 
-    #cannot make the player go bust
-    @count + 10 <= 21 ? @count + 10 : @count
-  end
 end
 
 class Player

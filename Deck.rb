@@ -16,7 +16,7 @@ class Deck
     def shuffle
     end
 
-    def deal(number_of_cards=1)
+    def deal
         @cards.pop
     end
 

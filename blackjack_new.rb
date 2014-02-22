@@ -26,7 +26,7 @@ players.each do |player|
   player.hand.cards.each do |card|
       print "#{card.show} "
   end
-  puts "Total is #{player.hand.total}"
+  puts "Total is #{player.hand.total}. Busted = #{player.hand.busted?}"
 end
 
 players.each do |player|
