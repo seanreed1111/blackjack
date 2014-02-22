@@ -5,7 +5,7 @@ class Deck
     VALUES = [1,2,3,4,5,6,7,8,9,10,10,10,10]
 
     def initialize
-        @cards = []
+        @cards = [] #an array of PlayingCard objects
         SUITS.each do |suit|
             RANKS.each_with_index do |rank, i|
                 @cards << PlayingCard.new(suit, rank, VALUES[i])
@@ -17,9 +17,7 @@ class Deck
     end
 
     def deal(number_of_cards=1)
-        current = @cards.pop
-        puts "Dealing...#{current.rank} of #{current.suit}"
-        current
+        @cards.pop
     end
 
     def remaining
