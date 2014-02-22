@@ -25,3 +25,12 @@ players.each do |player|
   puts "#{player.name} has #{player.hand.count}"
 end
 
+players.each do |player|
+  
+
+  while (true) do
+
+    break
+  end
+  
+end
