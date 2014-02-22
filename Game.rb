@@ -2,40 +2,46 @@ require './PlayingCard'
 require './Deck'
 
 class Hand
+  attr_reader :cards
   def initialize()
-    @hand = [] #an array of PlayingCard objects
+    @cards = [] #an array of PlayingCard objects
+    @has_ace = false
+    @count = 0
+  end
+
+  def clear
+    @cards = []
     @has_ace = false
     @count = 0
   end
 
   def hit!(deck)
-    @hand << deck.deal
+    @cards << deck.deal
   end
 
   def busted?
-    #doesn't take into account busting with aces
-    #if you have one or multiple aces, your count can be
-    #multi valued, but then once you are counting any ace
-    #as permanently one, you can bust out
-    #need to graph this out for all combinations of cards
-    @count > 21 #for @has_ace == true call busted_with_aces?
+    self.total > 21 
   end
 
-  def count
-    @hand.each do |playingcard|
+  def total
+    @cards.each do |playingcard|
       @count += playingcard.value 
     @has_ace = @has_ace || playingcard.is_ace?
     end
-    @count #for @has_ace == true call count_with_aces
+
+    if @has_ace
+      return self.total_with_aces
+    else
+      return @count
+    end
   end
 
-  def count_with_aces
-    #insert method for proper count with player holding
-    #one or more aces
-  end
-
-  def busted_with_aces?
-    #insert method for determining if player is busted w/ aces
+  def total_with_aces
+    #playingcard.value of Aces = 1
+    #At most one Ace per hand can have value of 11,
+    #but this +10 added to @count 
+    #cannot make the player go bust
+    @count + 10 <= 21 ? @count + 10 : @count
   end
 end
 

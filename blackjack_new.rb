@@ -3,8 +3,8 @@ require './PlayingCard'
 require './Game'
 
 
-cards = Deck.new
-players = []
+deck = Deck.new
+players = [] #an array of Player objects
 puts "Blackjack! How many players?"
 number_of_players = gets.chomp.to_i
 
@@ -16,13 +16,17 @@ puts "Great! we have #{number_of_players} players"
 puts "Let's deal!"
 
 players.each do |player|
-  2.times {player.hand.hit! cards}
+  2.times {player.hand.hit! deck}
 end
 
-puts "ok, so far the players have the following totals:"
+puts "ok, so far the players have the following cards:"
 
 players.each do |player|
-  puts "#{player.name} has #{player.hand.count}"
+  print "#{player.name} "
+  player.hand.cards.each do |card|
+      print "#{card.show} "
+  end
+  puts "Total is #{player.hand.total}"
 end
 
 players.each do |player|
