@@ -4,7 +4,7 @@ require './Game'
 
 
 deck = Deck.new
-#deck.cards.shuffle!
+
 deck.shuffle!
 
 players = [] #an array of Player objects
@@ -47,7 +47,7 @@ players.each do |player|
       player.hand.hit! deck
 
       if player.hand.busted?
-        print "so sorry, you are over 21, with "
+        print "sorry, you busted, you have "
           player.hand.cards.each do |card|
               print "#{card.show} "
           end

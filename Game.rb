@@ -7,7 +7,7 @@ class Hand
   def initialize()
     @cards = [] #an array of PlayingCard objects
     @has_ace = false
-    @win = false
+    @win = false #this should move
   end
 
   def first_card
@@ -43,11 +43,17 @@ class Hand
     if @has_ace
       return count + 10 if count + 10 <= 21 
     end
-
     return count
   end
 
+  def double_down
+    #in routine ensure that if player has doubled down can only take
+    #one card NO MATTER WHAT OTHER FACTORS SAY. 
+  end
 
+  def split
+
+  end
 
 end
 
@@ -66,6 +72,11 @@ class Player
   def winnings(amount=0)
     @cash += amount
   end
+
+  def play!
+    #function to get computer to play 
+    #basic strategy autonomously via AI
+  end
 end
 
 class Dealer
@@ -73,6 +84,15 @@ class Dealer
 
     def initialize
       @hand = Hand.new
+    end
+
+    def clear
+      @hand = []
+    end
+
+    def play!
+      #move dealer functionality here
+      #separate initial deal from hit/stand decision
     end
 end
 
