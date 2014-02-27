@@ -3,7 +3,7 @@ require './Deck'
 
 class Hand
   attr_reader :cards, :has_ace
-  attr_accessor :win, :split, :double_down
+  attr_accessor :win
   def initialize()
     @cards = [] #an array of PlayingCard objects
     @has_ace = false

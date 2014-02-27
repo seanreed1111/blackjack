@@ -1,15 +1,16 @@
-require './PlayingCard'
-require './Deck'
 require './Player'
 require './Dealer'
 
+
 class Game
 
-  def initialize(setup)
-    @split_allowed = setup[split_allowed]
-    @double_down_allowed = setup[double_down_allowed]
-    @das_allowed = setup[das_allowed] #das = double after split
-
+  def initialize(setup_hash)
+    @setup_hash = setup_hash
+    @split_allowed = setup_hash[split_allowed]
+    @double_down_allowed = setup_hash[double_down_allowed]
+    @das_allowed = setup_hash[das_allowed] #das = double after split
+    @computer_players = [] #array of player objects
+    @human_players = [] # array of player objects
   end
 
   def split_allowed?
