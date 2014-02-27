@@ -1,11 +1,12 @@
-sdh17nodas ={}
+# Single Deck, Dealer hits soft 17, Stands on 17+, double any two cards
+# no DAS (double after split), no resplit aces
+setup ={}
 
-#preprocessing needed for first two cards
-  # 1) split_allowed?
-  # 2) DAS_allowed?
-  # 3)double_down_allowed?
-  # 4) is_21? => if hand.total is 21, no further action needed
-  # 5)
+  setup[split_allowed] = true
+  setup[double_down_allowed] = true
+  setup[das_allowed]  = false
+
+
 
 #dealer.hand.cards.first is the dealer's up card. 
 #  define     first = dealer.hand.cards.first.value in [1,2,3,4,5,6,7,8,9,10]

@@ -1,7 +1,4 @@
-require './Deck'
-require './PlayingCard'
 require './Game'
-
 
 deck = Deck.new
 
