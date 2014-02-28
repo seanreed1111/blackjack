@@ -4,7 +4,7 @@ require './Deck'
 
 
 class Game
-  attr_reader :computer_players, :human_players, :dealer, :deck
+  attr_reader :computer_players, :human_players, :dealer, :deck, :setup_hash
   def initialize(setup_hash)
     @setup_hash = setup_hash
     @split_allowed = setup_hash["split_allowed"]
@@ -44,6 +44,8 @@ class Game
     }
   end
 
+
+
   def split_allowed?
     @split_allowed
   end
@@ -64,9 +66,11 @@ class Game
   # 3)double_down_allowed?
   # 4) is_21? => if hand.total is 21, no further action needed!
 
-  #preprocessing needed for third and all future cards also needed
+  
 
-  def preprocess_2!
+  def preprocess
 
   end
+
+  #note: separate preprocessing for third and all future cards also needed
 end

@@ -3,7 +3,9 @@ require './SD-H17-noDAS.rb'
 
 #pull in setup_hash for the game from SD-H17-noDAS.rb
 
-g = Game.new(Rules.new.load!)
+#make sure you account for what happens if you run out of cards mid-deal
+
+game = Game.new(Rules.new.load!)
 
 puts "Blackjack! How many Human players?"
 num_humans = gets.chomp.to_i
@@ -11,17 +13,18 @@ num_humans = gets.chomp.to_i
 puts "Blackjack! How many bot players?(max #{7-num_humans})"
 num_bots = gets.chomp.to_i
 
-g.player_setup!(num_humans, num_bots)
-g.first_two_cards!
+game.player_setup!(num_humans, num_bots)
+game.first_two_cards! #distributes cards to all players and dealer. 
+game.preprocess! if num_bots > 0 #runs initial bot preprocessing
 
  puts "Great! we have #{Player.count} players"
  puts "Let's deal! The dealer shows "
 
-puts "#{g.dealer.hand.first_card.show}"
+puts "#{game.dealer.hand.first_card.show}"
 puts ""
 puts "The players have the following cards:"
 
-g.human_players.each do |player|
+game.human_players.each do |player|
   puts "#{player.name} "
   player.hand.cards.each do |card|
       print "#{card.show} "
@@ -29,7 +32,7 @@ g.human_players.each do |player|
   puts "Total is #{player.hand.total}."
 end
 
-g.computer_players.each do |player|
+game.computer_players.each do |player|
   puts "#{player.name} "
   player.hand.cards.each do |card|
       print "#{card.show} "
@@ -38,7 +41,14 @@ g.computer_players.each do |player|
 end
 
 puts "The dealer shows "
-puts "#{g.dealer.hand.first_card.show}"
+puts "#{game.dealer.hand.first_card.show}"
+
+# bots need to decide what to do next given available information
+# info is contained in game.setup hash
+while true do
+
+  break
+end
 
 #this works with human players
 # deck = Deck.new
