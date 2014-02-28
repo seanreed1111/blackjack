@@ -3,10 +3,42 @@ require './SD-H17-noDAS.rb'
 
 #pull in setup_hash for the game from SD-H17-noDAS.rb
 
-g = Game.new(Rules.load!)
+g = Game.new(Rules.new.load!)
 
+puts "Blackjack! How many Human players?"
+num_humans = gets.chomp.to_i
 
+puts "Blackjack! How many bot players?(max #{7-num_humans})"
+num_bots = gets.chomp.to_i
 
+g.player_setup!(num_humans, num_bots)
+g.first_two_cards!
+
+ puts "Great! we have #{Player.count} players"
+ puts "Let's deal! The dealer shows "
+
+puts "#{g.dealer.hand.first_card.show}"
+puts ""
+puts "The players have the following cards:"
+
+g.human_players.each do |player|
+  puts "#{player.name} "
+  player.hand.cards.each do |card|
+      print "#{card.show} "
+  end
+  puts "Total is #{player.hand.total}."
+end
+
+g.computer_players.each do |player|
+  puts "#{player.name} "
+  player.hand.cards.each do |card|
+      print "#{card.show} "
+  end
+  puts "Total is #{player.hand.total}."
+end
+
+puts "The dealer shows "
+puts "#{g.dealer.hand.first_card.show}"
 
 #this works with human players
 # deck = Deck.new

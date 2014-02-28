@@ -59,4 +59,12 @@ class Hand
   def hit!(deck)
     @cards << deck.deal
   end
+
+  def show(&cards)
+    @cards.each do |card|
+      print "#{card.show} "
+    end
+    puts
+    puts "Total is #{player.hand.total}."
+  end
 end

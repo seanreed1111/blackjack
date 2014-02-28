@@ -2,6 +2,9 @@
 # no DAS (double after split), no resplit aces
 
 class Rules
+  def initialize
+  end
+
   def load!
     setup ={}
     setup["split_allowed"]       = true

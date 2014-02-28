@@ -18,8 +18,8 @@ class Player
 
   def clear
     @hand = Hand.new
-    @split = false #has player split yet?
-    @double_down = false #has player doubled down yet?
+    @split = false
+    @double_down = false
   end
 
   def winnings(amount=0)
