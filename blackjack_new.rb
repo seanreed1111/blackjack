@@ -14,7 +14,7 @@ puts "Blackjack! How many bot players?(max #{7-num_humans})"
 num_bots = gets.chomp.to_i
 
 game.player_setup!(num_humans, num_bots)
-game.first_two_cards! #distributes cards to all players and dealer. 
+game.first_two_cards! #distributes cards to all players AND dealer. 
 game.preprocess! if num_bots > 0 #runs initial bot preprocessing
 
  puts "Great! we have #{Player.count} players"
@@ -45,12 +45,50 @@ puts "#{game.dealer.hand.first_card.show}"
 
 # bots need to decide what to do next given available information
 # info is contained in game.setup hash
+
+#loop over all human players
+#players should be allowed to
+# 1) Hit
+# 2) Stand
+# 3) Double Down
+# 4) Split
+
+players.each do |player|
+   while (true) do 
+    puts "#{player.name} you have #{player.hand.total}. Would you like to hit or stand?"
+    answer = gets.chomp.downcase
+    break if answer == "stand"
+
+    if answer == "hit"
+
+      player.hand.hit! deck
+
+      if player.hand.busted?
+        print "sorry, you busted, you have "
+          player.hand.cards.each do |card|
+              print "#{card.show} "
+          end
+        puts
+      end
+    end
+    break if player.hand.busted?
+  end
+end
+
+#loop over all bots
+#bots should be allowed to
+# 1) Hit
+# 2) Stand
+# 3) Double Down
+# 4) Split
+
 while true do
 
   break
 end
 
-#this works with human players
+-----------------------------------------------
+#the following block works with human players
 # deck = Deck.new
 
 # deck.shuffle!
