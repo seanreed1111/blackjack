@@ -15,7 +15,7 @@ num_bots = gets.chomp.to_i
 
 game.player_setup!(num_humans, num_bots)
 game.first_two_cards! #distributes cards to all players AND dealer. 
-game.preprocess! if num_bots > 0 #runs initial bot preprocessing
+
 
  puts "Great! we have #{Player.count} players"
  puts "Let's deal! The dealer shows "
@@ -29,7 +29,7 @@ game.human_players.each do |player|
   player.hand.cards.each do |card|
       print "#{card.show} "
   end
-  puts "Total is #{player.hand.total}."
+  puts "Initial Total is #{player.hand.total}."
 end
 
 game.computer_players.each do |player|
@@ -37,7 +37,7 @@ game.computer_players.each do |player|
   player.hand.cards.each do |card|
       print "#{card.show} "
   end
-  puts "Total is #{player.hand.total}."
+  puts "Intial Total is #{player.hand.total}."
 end
 
 puts "The dealer shows "
@@ -53,7 +53,8 @@ puts "#{game.dealer.hand.first_card.show}"
 # 3) Double Down
 # 4) Split
 
-players.each do |player|
+#only HIT and STAND implemented here for human players
+game.human_players.each do |player|
    while (true) do 
     puts "#{player.name} you have #{player.hand.total}. Would you like to hit or stand?"
     answer = gets.chomp.downcase
@@ -61,7 +62,7 @@ players.each do |player|
 
     if answer == "hit"
 
-      player.hand.hit! deck
+      player.hand.hit! game.deck
 
       if player.hand.busted?
         print "sorry, you busted, you have "
@@ -75,19 +76,44 @@ players.each do |player|
   end
 end
 
-#loop over all bots
-#bots should be allowed to
-# 1) Hit
-# 2) Stand
-# 3) Double Down
-# 4) Split
+  #loop over all bots
+  #bots should be allowed to
+  # 1) Hit
+  # 2) Stand
+  # 3) Double Down
+  # 4) Split
 
-while true do
+ #BOTS IMPLEMENTED HERE
+if game.computer_players_exist? 
+  game.computer_players.each do |player|
+     while (true) do 
+      puts "#{player.name} has #{player.hand.total}."
+      answer = player.computer_play! game.setup_hash #at first pass, AI must return "hit" or "stand". put double/split later
+      print"#{player.name} decides to #{answer}\n"
 
-  break
+      break if answer == "stand"
+
+      if answer == "hit"
+
+        player.hand.hit! game.deck
+
+        if player.hand.busted?
+          puts "sorry, you busted, you have "
+            player.hand.cards.each do |card|
+                print "#{card.show} "
+            end
+          puts
+        end
+      end
+      break if player.hand.busted?
+    end
+  end
 end
 
------------------------------------------------
+puts
+
+
+#-----------------------------------------------
 #the following block works with human players
 # deck = Deck.new
 
