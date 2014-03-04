@@ -17,7 +17,7 @@ class Game
   end
 
   def player_setup!(num_humans, num_bots)
-    return "error" if num_humans + num_bots > 7 
+    # return "error" if num_humans + num_bots > 7 
     num_humans.times do
       @human_players << Player.new("Human Player #{Player.count+1}")
     end

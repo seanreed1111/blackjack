@@ -16,43 +16,11 @@ class Rules
     setup["h"] = "hit"
     setup["d"] = "double"
 
-    #dealer.hand.cards.first is the dealer's up card. 
-    #  define     first = dealer.hand.cards.first.value in [1,2,3,4,5,6,7,8,9,10]
-    #             total = player.hand.total
-
-    ##### methods are all written assuming return function is used once the place in the waterfall
-    ####      is established.
-
-    ##### if player.hand has_ace?
-    #####     
-    ####      use split table if split_allowed? && total == 12 (player has AA and should split)
-    ####      use soft hand table
-    ####  else
-    ####      
-    ####      if player.hand.cards.first.value == player.hand.cards.second.value (check for pairs. )
-    ####         compute total value in [4,6,8,10,12,14,16,18,20]
-
-    ####         if double_down_allowed?
-    ####            use double table for value = 8 or 10 (44, 55)
-    ####         end
-    ####         
-    ####         use split table if split_allowed? 
-    ####      else
-    ####         use hard hand table
-    ####      end
-    ##### end
-
-    #preprocessing needed for first three cards
-    #doubled_down?  => if hand has already been doubled down, no more cards allowed
-    # player can split as much as they want!
-
-
-
     #ensure that basic strategy table is set up with A represented by 1!!!
     # p = split, h = hit, d = double, s= stand
     setup["split_table"] = {}  
 
-    setup["split_table"]["AA"] = { 2=>"p",3=>"p",4=>"p",5=>"p",6=>"p",7=>"p",
+    setup["split_table"]["11"] = { 2=>"p",3=>"p",4=>"p",5=>"p",6=>"p",7=>"p",
                          8=>"p",9=>"p",10=>"p", 1=>"p"} 
     setup["split_table"]["22"] = {2=>"h",3=>"p",4=>"p",5=>"p",6=>"p",7=>"p",
                          8=>"h",9=>"h",10=>"h", 1=>"h"}
