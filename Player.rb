@@ -73,7 +73,7 @@ class Player
 
 
   #AI basic strategy generator 
-  # Player#computer_play! should ultimately return "HIT", "STAND", "DOUBLE", or "SPLIT"
+  # Player#computer_play! returns "hit", "stand", "dobule", or "split"
   def computer_play!(setup, dealer_up_card_value)   
     answer = nil
     lookup_value = ""
@@ -90,16 +90,14 @@ class Player
     else
       #table_name is split_table. #lookup_value should be string, e.g. "22" or 33" 
         lookup_value = self.hand.first_card.to_s + self.hand.second_card.to_s
-        # if lookup_value != "1010" || lookup_value != "22"
-        #   debugger 
-        # end
+
     end
 
     #answer_key will be set to "h", "s", "d", or "p"
     answer_key = setup[table_name][lookup_value][dealer_up_card_value]
 
-    answer = setup[answer_key] #"hit", "stand", "double", "split"
-    answer = "hit" if answer == "double" || answer == "split"  #testing only
+    answer = setup[answer_key] #"hit", "stand", "double", or "split"
+    answer = "hit" if answer == "split"  ###testing only###
 
     answer
   end

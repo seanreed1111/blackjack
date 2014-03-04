@@ -1,19 +1,18 @@
 require './Game'
-require './SD-H17-noDAS.rb'
+require './SD-H17-noDAS.rb' #contains Rules
 require 'debugger'
-
-#pull in setup_hash for the game from SD-H17-noDAS.rb
 
 #make sure you account for what happens if you run out of cards mid-deal
 
+#1000.times {  ###this is for testing purposes ####
 
   game = Game.new(Rules.new.load!)
 
   puts "Blackjack! How many Human players?"
-  num_humans = gets.chomp.to_i
+  num_humans = 0 #####gets.chomp.to_i
 
   puts "Blackjack! How many bot players?(max #{7-num_humans})"
-  num_bots = gets.chomp.to_i
+  num_bots = 7#gets.chomp.to_i
 
   game.player_setup!(num_humans, num_bots)
   game.first_two_cards! #distributes cards to all players AND dealer. 
@@ -60,7 +59,7 @@ require 'debugger'
       answer = gets.chomp.downcase
       break if answer == "stand"
 
-      if answer == "hit"
+      if answer == "hit" || answer == "double"
 
         player.hand.hit! game.deck
 
@@ -72,7 +71,8 @@ require 'debugger'
           puts
         end
       end
-      break if player.hand.busted?
+
+      break if player.hand.busted? || answer == "double"
     end
   end
 
@@ -88,12 +88,12 @@ require 'debugger'
     game.computer_players.each do |player|
        while (true) do 
         puts "#{player.name} has #{player.hand.total}."
-        answer = player.computer_play!(game.setup_hash, game.dealer.hand.second_card) #at first pass, AI must return "hit" or "stand". put double/split later
+        answer = player.computer_play!(game.setup_hash, game.dealer.hand.second_card)
         print"#{player.name} decides to #{answer}\n"
 
         break if answer == "stand"
 
-        if answer == "hit"
+        if answer == "hit" || answer == "double"
 
           player.hand.hit! game.deck
 
@@ -105,7 +105,7 @@ require 'debugger'
             puts
           end
         end
-        break if player.hand.busted?
+        break if player.hand.busted? || answer == "double"
       end
     end
   end
@@ -114,41 +114,42 @@ require 'debugger'
 
 
 
-#dealer's rules: must hit soft 17
-#                must stand on hard 17 or higher
-#                must hit everything else
+  #dealer's rules: must hit soft 17
+  #                must stand on hard 17 or higher
+  #                must hit everything else
 
-while (true) do
-  dealer_total = game.dealer.hand.total
-  puts "dealer_total = #{dealer_total} at beginning of while loop"
-  break if dealer_total >= 18
-  break if dealer_total == 17  && !dealer.hand.has_ace? #hard 17
-  game.dealer.hand.hit! deck
-end
-puts "Dealer has"
-game.dealer.hand.cards.each do |card|
-  print "#{card.show} "
-end
-puts "dealer_total is #{dealer_total}"
+  while (true) do
+    dealer_total = game.dealer.hand.total
+    puts "dealer_total = #{dealer_total} at beginning of while loop"
+    break if dealer_total >= 18
+    break if dealer_total == 17  && !game.dealer.hand.has_ace? #hard 17
+    game.dealer.hand.hit! game.deck
+  end
+  puts "Dealer has"
+  game.dealer.hand.cards.each do |card|
+    print "#{card.show} "
+  end
+  puts "dealer_total is #{dealer_total}"
 
-dealer_busted = game.dealer.hand.busted?
+  dealer_busted = game.dealer.hand.busted?
 
-game.human_players.each do |player|
-  next if player.hand.busted?
-  if dealer_busted || (player.hand.total > dealer_total)
-    puts "#{player.name} wins! "
-    player.hand.win = true
-    #adjust player's winnings by the amount of the bet
-  end 
-end
+  game.human_players.each do |player|
+    next if player.hand.busted?
+    if dealer_busted || (player.hand.total > dealer_total)
+      puts "#{player.name} wins! "
+      player.hand.win = true
+      #adjust player's winnings by the amount of the bet
+    end 
+  end
 
-game.computer_players.each do |player|
-  next if player.hand.busted?
-  if dealer_busted || (player.hand.total > dealer_total)
-    puts "#{player.name} wins! "
-    player.hand.win = true
-    #adjust player's winnings by the amount of the bet
-  end 
-end
-puts
+  game.computer_players.each do |player|
+    next if player.hand.busted?
+    if dealer_busted || (player.hand.total > dealer_total)
+      puts "#{player.name} wins! "
+      player.hand.win = true
+      #adjust player's winnings by the amount of the bet
+    end 
+  end
+  puts
 
+#} ##### end of testing loop
