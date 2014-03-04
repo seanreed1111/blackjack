@@ -139,13 +139,10 @@ class Player
     if table_name == "hard_hand_table" || table_name == "soft_hand_table"
       lookup_value = self.hand.total #lookup_value should be integer
     else
-      #table_name is split_table. #lookup_value should be string
-      self.hand.cards do |card|
-        lookup_value += card.rank
-      end
+      #table_name is split_table. #lookup_value should be string, e.g. "22" or 33" 
+        lookup_value = self.hand.first_card.to_s *2
     end
 
-    puts
     #answer_key will be set to "h", "s", "d", or "p"
     answer_key = setup[table_name][lookup_value][dealer_up_card_value]
 
