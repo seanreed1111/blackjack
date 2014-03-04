@@ -130,25 +130,24 @@ class Player
     lookup_value = ""
     if self.hand.number_of_cards == 2
       table_name = self.preprocess!(setup)
+    elsif self.hand.has_ace?
+      table_name = "soft_hand_table"
     else
-      table_name = "hard_hand_table"
+      table_name = "hard_hand_table"    
     end
 
-    if table_name == "hard_hand_table" 
+    if table_name == "hard_hand_table" || table_name == "soft_hand_table"
       lookup_value = self.hand.total #lookup_value should be integer
     else
-      #table_name is soft_hand_table or split_table. #lookup_value should be string in either case
+      #table_name is split_table. #lookup_value should be string
       self.hand.cards do |card|
-        lookup_value += card.rank  
+        lookup_value += card.rank
       end
-      #"A" needs to be first in soft hand table
-      lookup_value.reverse! if (lookup_value[0] != "A") && (table_name == "soft_hand_table")
     end
-    debugger
-    puts
-    #answer_key will be "h", "s", "d", or "p"
-    answer_key = setup[table_name][lookup_value][dealer_up_card_value]
 
+    puts
+    #answer_key will be set to "h", "s", "d", or "p"
+    answer_key = setup[table_name][lookup_value][dealer_up_card_value]
 
     answer = setup[answer_key] #"hit", "stand", "double", "split"
     answer = "hit" if answer == "double" || answer == "split"  #testing only
