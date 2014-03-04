@@ -1,5 +1,5 @@
 # Single Deck, Dealer hits soft 17, Stands on 17+, double any two cards
-# no DAS (double after split), no resplit aces
+# Player can split as much as they want, and doube after split
 
 class Rules
   def initialize
@@ -7,11 +7,14 @@ class Rules
 
   def load!
     setup ={}
-    setup["split_allowed"]       = true
+    setup["split_allowed"]       = true   #unlimited splits
     setup["double_down_allowed"] = true
-    setup["das_allowed"]         = false
+    setup["das_allowed"]         = true
 
-
+    setup["p"] = "split"
+    setup["s"] = "stand"
+    setup["h"] = "hit"
+    setup["d"] = "double"
 
     #dealer.hand.cards.first is the dealer's up card. 
     #  define     first = dealer.hand.cards.first.value in [1,2,3,4,5,6,7,8,9,10]
@@ -41,10 +44,8 @@ class Rules
 
     #preprocessing needed for first three cards
     #doubled_down?  => if hand has already been doubled down, no more cards allowed
-    # if player has already split,
-    ##### update split_allowed? depending on if multiple splits
-    ##    are possible. 
-    ####  Also ensure that hand cannot resplit AA a second time
+    # player can split as much as they want!
+
 
 
     #ensure that basic strategy table is set up with A represented by 1!!!

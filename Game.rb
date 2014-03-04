@@ -13,7 +13,7 @@ class Game
     @human_players = [] # array of player objects
     @computer_players = [] #array of player objects
     @dealer = Dealer.new
-    @deck = Deck.new
+    @deck = Deck.new.shuffle!
   end
 
   def player_setup!(num_humans, num_bots)

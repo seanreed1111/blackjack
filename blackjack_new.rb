@@ -1,5 +1,6 @@
 require './Game'
 require './SD-H17-noDAS.rb'
+require 'debugger'
 
 #pull in setup_hash for the game from SD-H17-noDAS.rb
 
@@ -20,7 +21,7 @@ game.first_two_cards! #distributes cards to all players AND dealer.
  puts "Great! we have #{Player.count} players"
  puts "Let's deal! The dealer shows "
 
-puts "#{game.dealer.hand.first_card.show}"
+puts "#{game.dealer.hand.first_card}"
 puts ""
 puts "The players have the following cards:"
 
@@ -41,7 +42,7 @@ game.computer_players.each do |player|
 end
 
 puts "The dealer shows "
-puts "#{game.dealer.hand.first_card.show}"
+puts "#{game.dealer.hand.second_card}"
 
 # bots need to decide what to do next given available information
 # info is contained in game.setup hash
@@ -88,7 +89,7 @@ if game.computer_players_exist?
   game.computer_players.each do |player|
      while (true) do 
       puts "#{player.name} has #{player.hand.total}."
-      answer = player.computer_play! game.setup_hash #at first pass, AI must return "hit" or "stand". put double/split later
+      answer = player.computer_play!(game.setup_hash, game.dealer.hand.second_card) #at first pass, AI must return "hit" or "stand". put double/split later
       print"#{player.name} decides to #{answer}\n"
 
       break if answer == "stand"

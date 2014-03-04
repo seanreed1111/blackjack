@@ -8,7 +8,6 @@ class Hand
     @cards = [] #an array of PlayingCard objects
     @has_ace = false
     @win = false
-
   end
 
   def clear
@@ -37,15 +36,23 @@ class Hand
   end
 
   def first_card
-    @cards[@cards.length-1]
+    @cards[0].value
   end
 
+  def second_card
+    @cards[1].value 
+  end
+  
   def number_of_cards
     @cards.length
   end
 
   def busted?
     self.total > 21 
+  end
+
+  def has_ace?
+    @has_ace
   end
 
   def double_down
